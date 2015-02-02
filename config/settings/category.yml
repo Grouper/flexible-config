@@ -1,0 +1,15 @@
+---
+default:
+  subcategory:
+    wrapped_yaml: testing
+    dummy:
+      one: 1
+    default_yaml_config: fallback_value
+  another_sub:
+    short_syntax: 'shorty'
+
+test:
+  subcategory:
+    dummy:
+      two: 2
+    environment_specific: "test_only"
