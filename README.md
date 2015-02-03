@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/brett-richardson/flexible-config.png?branch=master)](https://travis-ci.org/brett-richardson/flexible-config)
+[![Build Status](https://travis-ci.org/Grouper/flexible-config.png?branch=master)](https://travis-ci.org/Grouper/flexible-config)
 
 
 FlexibleConfig
@@ -30,10 +30,12 @@ Or the more safer, (but more verbose) syntax:
 ```ruby
 module Bidding
   class Calculator
-    FlexibleConfig.use 'auction.bidding' do |config|
-      BASE_RATE   = config.fetch('base_rate')   { 1.0 }
-      TIME_DECAY  = config.fetch('time_decay')  { 3.0 }
-      WIGGLE_ROOM = config.fetch('wiggle_room') { 0.2 }
+    FlexibleConfig.use 'auction.bidding' do |cfg|
+      BIDDING_ENABLED = cfg.fetch('enabled') { true }
+      BIDDER_EMAIL    = cfg.to_s('email_from')
+      BASE_RATE       = cfg.to_f('base_rate') { 1.0 }
+      TIME_DECAY      = cfg.to_f('time_decay') { 3.0 }
+      ATTEMPTS        = cfg.to_i('wiggle_room') { 2 }
     end
   end
 end
@@ -64,6 +66,32 @@ production:
 AUCTION_BIDDING_BASE_RATE=1.0
 AUCTION_BIDDING_TIME_DECAY=3.0
 AUCTION_BIDDING_WIGGLE_ROOM=0.2
+```
+
+#### Casting Booleans from ENV
+
+If your ENV variable is equal to the string 'true' or 'false' then
+using the default `#fetch` method on the config object will cast it to the
+Ruby `TrueClass` or `FalseClass` automatically.
+
+#### Casting of Other Types
+
+Casting to any Ruby type will work as long as the Ruby object and its string
+representation are safely interchangable:
+
+```
+example.yml
+
+default:
+  safe: '123'
+  unsafe: '123oops'
+```
+
+```ruby
+FlexibleConfig.use 'example' do |cfg|
+  BASE_RATE  = cfg.to_i('safe') # => 123
+  TIME_DECAY = cfg.to_i('unsafe') # => raises UnsafeConversion
+end
 ```
 
 - - - - -
