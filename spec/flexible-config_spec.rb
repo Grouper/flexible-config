@@ -4,8 +4,10 @@ describe ExampleClass, "using the FlexibleConfig.use method to set constants" do
   before do
     allow(ENV).to receive(:[]).and_return nil
 
-    { 'CATEGORY_SUBCATEGORY_ENV_OVERRIDE' => 'overridden',
-      'RAILS_ENV' => 'test'
+    { 'RAILS_ENV'                         => 'test',
+      'CATEGORY_SUBCATEGORY_ENV_OVERRIDE' => 'overridden',
+      'CATEGORY_SUBCATEGORY_FALSE_STRING' => 'false',
+      'CATEGORY_SUBCATEGORY_TRUE_STRING'  => 'true'
     }.each do |key, value|
       allow(ENV).to receive(:[]).with(key).and_return value
     end
@@ -48,6 +50,18 @@ describe ExampleClass, "using the FlexibleConfig.use method to set constants" do
 
     it "raises a NotFound exception" do
       expect { subject }.to raise_error FlexibleConfig::NotFound
+    end
+  end
+
+  context "when the ENV defines the value as a string 'true'" do
+    it "converts it to a boolean" do
+      expect(described_class::TRUE_STRING).to eq true
+    end
+  end
+
+  context "when the ENV defines the value as a string 'false'" do
+    it "converts it to a boolean" do
+      expect(described_class::FALSE_STRING).to eq false
     end
   end
 end

@@ -5,6 +5,10 @@ default:
     dummy:
       one: 1
     default_yaml_config: fallback_value
+    safe_int: "2345"
+    unsafe_int: "1235test"
+    safe_float: "0.456457"
+    unsafe_float: "0.234345345test"
   another_sub:
     short_syntax: 'shorty'
 
