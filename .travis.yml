@@ -1,9 +1,9 @@
 language: ruby
-bundler_args: --without development
+script: bundle exec rake
+
 env:
   - CI=true
+
 rvm:
-  - "jruby"
   - "2.0.0"
   - "2.1.0"
-script: bundle exec rake
