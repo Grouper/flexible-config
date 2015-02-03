@@ -26,7 +26,12 @@ module FlexibleConfig
       end
 
       def app_environment
-        ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'
+        (
+          ENV['CONFIG_ENV'] ||
+          ENV['RAILS_ENV']  ||
+          ENV['RACK_ENV']   ||
+          'development'
+        )
       end
     end
   end
