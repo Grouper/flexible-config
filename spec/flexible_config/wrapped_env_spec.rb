@@ -3,7 +3,11 @@ require 'spec_helper'
 describe FlexibleConfig::WrappedEnv do
   let(:key) { 'TEST_KEY' }
   let(:value) { nil }
-  before { allow(ENV).to receive(:[]).with(key).and_return value }
+
+  before do
+    allow(ENV).to receive(:[]).with(key).and_return value
+    allow(ENV).to receive(:[]).with('RAILS_ENV').and_return 'test'
+  end
 
   describe "#[]" do
     subject { described_class[key] }
@@ -47,7 +51,10 @@ describe FlexibleConfig::WrappedEnv do
     let(:value) { '1' }
     subject { described_class.int key }
 
-    before { allow(ENV).to receive(:fetch).with(key).and_return value }
+    before do
+      allow(ENV).to receive(:fetch).with('RAILS_ENV').and_return 'test'
+      allow(ENV).to receive(:fetch).with(key).and_return value
+    end
 
     it { should eql value.to_i }
 
