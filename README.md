@@ -94,6 +94,21 @@ FlexibleConfig.use 'example' do |cfg|
 end
 ```
 
+#### Viewing actual config variables in an environment
+
+Add this to the `Rakefile` of your project:
+
+```
+# Load flexible config tasks
+spec = Gem::Specification.find_by_name 'flexible-config'
+load "#{spec.gem_dir}/lib/tasks/flexible_config.rake"
+```
+
+Type into the command line:
+```
+bundle exec rake flexible_config:print
+```
+
 - - - - -
 
 ## Rake Task
