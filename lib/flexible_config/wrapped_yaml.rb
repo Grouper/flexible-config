@@ -6,6 +6,14 @@ module FlexibleConfig
       def [](key)
         get_config(key, env: app_environment) || get_config(key)
       end
+      
+      def config_data
+        @config_data ||= Dir[CONFIG_PATH].reduce({}) do |memo, file|
+          category = File.basename(file, '.yml')
+          memo[category] = YAML.load File.open file
+          memo
+        end
+      end
 
       private
 
@@ -14,14 +22,6 @@ module FlexibleConfig
 
         keys_with_injected_env.reduce(config_data) do |memo, i|
           memo[i] unless memo.nil?
-        end
-      end
-
-      def config_data
-        @config_data ||= Dir[CONFIG_PATH].reduce({}) do |memo, file|
-          category = File.basename(file, '.yml')
-          memo[category] = YAML.load File.open file
-          memo
         end
       end
 

@@ -9,6 +9,7 @@ module FlexibleConfig
   end
 end
 
+require 'flexible_config/overview'
 require 'flexible_config/not_found'
 require 'flexible_config/builder'
 require 'flexible_config/wrapped_env'
