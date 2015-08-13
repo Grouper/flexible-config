@@ -29,7 +29,7 @@ module FlexibleConfig
         keys += flat_hash(env).keys
       end
 
-      keys.uniq.map do |keys|
+      keys.uniq.sort.map do |keys|
         value = begin
           builder[keys.join '.']
         rescue FlexibleConfig::NotFound => e
