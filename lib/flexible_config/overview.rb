@@ -9,7 +9,7 @@ module FlexibleConfig
 
     def print
       call.each do |key, value|
-        Kernel.puts "#===== #{key.upcase} ====="
+        Kernel.puts "#===== #{key.upcase} (#{key}.yml) ====="
         value.each { |v| Kernel.puts v }
         Kernel.puts "\n"
       end
@@ -41,8 +41,8 @@ module FlexibleConfig
         env_key       = combined_keys.map(&:upcase).join '_'
         from_env      = !WrappedEnv[env_key].nil? ? 'ENV OVERRIDE' : ''
 
-        sprintf("%-45s = %-25s |%-12s| %s.yml > %s",
-          env_key, value, from_env, category, dotted_key
+        sprintf("%-40s|%-12s|  %-45s = %s",
+          dotted_key, from_env, env_key, value
         )
       end
     end

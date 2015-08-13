@@ -7,11 +7,10 @@ RSpec.describe FlexibleConfig::Overview do
 
   describe "example category" do
     subject { instance.call }
-    
+
     let :expected_output do
-      "CATEGORY_SUBCATEGORY_WRAPPED_YAML             = " \
-      "testing                   |            | " \
-      "category.yml > subcategory.wrapped_yaml"
+      "subcategory.wrapped_yaml                |            |  " \
+        "CATEGORY_SUBCATEGORY_WRAPPED_YAML             = testing"
     end # Weird spacing due to sprintf column pattern
 
     specify "it outputs the available configuration" do
