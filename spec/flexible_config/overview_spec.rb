@@ -9,14 +9,20 @@ RSpec.describe FlexibleConfig::Overview do
     subject { instance.call }
 
     let :expected_output do
-      "subcategory.wrapped_yaml                |            |  " \
-        "CATEGORY_SUBCATEGORY_WRAPPED_YAML             = testing"
+      "another_sub.short_syntax                |            |  " \
+        "CATEGORY_ANOTHER_SUB_SHORT_SYNTAX             = shorty"
     end # Weird spacing due to sprintf column pattern
 
     specify "it outputs the available configuration" do
       expect(
         subject['category'].first
       ).to eq expected_output
+    end
+
+    specify "it sorts alphabetically" do
+      expect(
+        subject['category'].first
+      ).to be <= subject['category'].last
     end
   end
 
