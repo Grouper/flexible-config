@@ -111,15 +111,6 @@ bundle exec rake flexible_config:print
 
 - - - - -
 
-## Rake Task
-
-Load the `lib/tasks/flexible_config.task` in your rakefile
-Run the rake task `rake flexible_config:print` task to print all available
-configs available in your project, along with their current value
-and a flag showing if they are ENV overridden or not.
-
-- - - - -
-
 ## Contributing
 
 If you'd like to become a contributor, the easiest way it to fork this repo, make your changes, run the specs and submit a pull request once they pass.
