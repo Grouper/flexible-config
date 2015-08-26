@@ -4,9 +4,10 @@ module FlexibleConfig
 
     class << self
       def [](key)
-        get_config(key, env: app_environment) || get_config(key)
+        environment_specific = get_config(key, env: app_environment)
+        environment_specific.nil? ? get_config(key) : environment_specific
       end
-      
+
       def config_data
         @config_data ||= Dir[CONFIG_PATH].reduce({}) do |memo, file|
           category = File.basename(file, '.yml')
